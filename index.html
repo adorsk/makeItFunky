@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.png">
+
+    <title>Make It Funky</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/makeItFunky.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,900' rel='stylesheet' type='text/css'>
+
+    <style>
+        h1 { 
+            text-transform: uppercase;
+            font-family: 'Maven Pro', sans-serif;
+        }
+        h1 .char1 {color: #EBCD2D;}
+        h1 .char2 {color: #3A50A6;}
+        h1 .char3 {color: #E58B1D;}
+        h1 .char4 {color: #EBD71E;}
+        h1 .char5 {color: #76B4E3;}
+        h1 .char6 {color: #D8412E;}
+        h1 .char7 {color: #ABB514;}
+        h1 .char8 {color: #4C88D0;}
+        h1 .char9 {color: #E58B1D;}
+        h1 .char10 {color: #3A50A6;}
+        h1 .char11 {color: #76B4E3;}
+        h1 .char12 {color: #D8412E;}
+        h1 .char13 {color: #A43F67;}
+
+        .btn {
+            font-size: 150%;
+        }
+
+        #mainContainer {
+            width: auto;
+        }
+
+        .header {border-color: purple; }
+        .footer {border-color: transparent; }
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <div id="mainContainer" class="container">
+      <div class="header">
+        <h1 class="text-muted">Make It Funky</h1>
+      </div>
+
+      <div class="jumbotron">
+          <img src="img/jbHead.svg">
+          <div>
+              <i>James Brown, the Godfather of Soul</i>
+          </div>
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-6">
+            <ol>
+                <li>
+                <h4>Pick a Song</h4>
+                <select class="sel" id="clipSelect">
+                </select>
+                <br/>
+                <br/>
+                </li>
+
+                <li>
+                <button id="makeItFunkyButton" type="button" class="btn btn-primary">Make it Funky</button>
+                <div id="status"></div>
+                <br/>
+                </li>
+
+                <li><button id="playButton" type="button" class="btn btn-primary">&#9654; Play It Loud</button></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="footer"></div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="lib/jquery.lettering.js"></script>
+    <script src='lib/remix.js'></script>
+    <script src="js/clips.js"></script>
+    <script src="js/makeItFunky.js"></script>
+
+  </body>
+</html>
