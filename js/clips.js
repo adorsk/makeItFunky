@@ -5,11 +5,6 @@ clips = [
   trackURL: 'clips/bob_dylan__hard_rain.mp3'
 },
 {
-  trackID: 'TRPQYFR14242EE8C45',
-  label: 'Elvis: Suspicious Minds',
-  trackURL: 'clips/elvis__suspicious_minds.mp3'
-},
-{
   trackID: 'TRETNMK14242EF0B76',
   label: 'Joan Baez: Kumbaya',
   trackURL: 'clips/joan_baez__kumbaya.mp3'
