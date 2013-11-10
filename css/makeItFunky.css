@@ -6,6 +6,11 @@ body {
   background: black;
 }
 
+#status {
+  font-style: italic;
+  font-size: 150%;
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,

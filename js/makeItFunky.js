@@ -1,3 +1,18 @@
+// I wrote some pretty kludgy code here, but hack-toring comes before
+// refactoring...
+//
+var apiKey = 'QQCJEYULWUZXO5U6V';
+var gruntURL= 'clips/jb_unh.wav'
+
+var context;
+var gruntBuffer;
+
+var remixer;
+var player;
+var isPlaying;
+var track;
+var remixed;
+
 // Funkify the title.
 $('h1').lettering();
 
@@ -14,29 +29,102 @@ var getSelectedClip = function(){
   return clips[clipIndex];
 }
 
-// Wire up buttons.
-$makeItFunkyButtn = $('#makeItFunkyButton');
-$playButton = $('#playButton');
+$status = $('#status');
 
-$playButton.on('click', function(){
-  console.log('play');
+// Buttons Wiring.
+$makeItFunkyButton = $('#makeItFunkyButton');
+$playButton = $('#playButton');
+$stopButton = $('#stopButton');
+
+var enablePlayButton = function(){
+  $playButton.removeClass('disabled');
+
+  $playButton.on('click', function(){
+    startPlaying();
+  });
+}
+
+var disablePlayButton = function(){
+  $playButton.addClass('disabled');
+  $playButton.off('click');
+}
+
+var toggleStopButton = function(){
+  if ($stopButton.is(':visible')){
+    $playButton.show();
+    $stopButton.hide();
+  }
+  else{
+    $playButton.hide();
+    $stopButton.show();
+  }
+}
+
+var stopPlaying = function(){
+  console.log('stopPlaying');
+  player.stop();
+  toggleStopButton();
+  isPlaying = false;
+}
+
+var startPlaying = function(){
+  toggleStopButton();
   player.play(0, remixed);
+  isPlaying = true;
+}
+
+$stopButton.on('click', function(){
+  stopPlaying();
+});
+
+// Set play button to disabled initially.
+disablePlayButton();
+
+$makeItFunkyButton.on('click', function(){
+  if (isPlaying){
+    stopPlaying();
+  }
+  disablePlayButton();
+  $status.html('Getting up offa that thing...');
+  remixIt();
 });
 
 
-// Plays a cowbell on every second beat
-// You will need to supply your Echo Nest API key, the trackID, and a URL to the track.
-// The supplied track and the cowbell file can be found in the audio subdirectory.
-var apiKey = 'QQCJEYULWUZXO5U6V';
-var gruntURL= 'clips/jb_unh.wav'
+var remixIt = function(){
+  remixer = createJRemixer(context, $, apiKey);
+  player = remixer.getPlayer();
+  $("#info").text("Loading analysis data...");
 
-var context;
-var gruntBuffer;
+  var clip = getSelectedClip();
 
-var remixer;
-var player;
-var track;
-var remixed;
+  remixer.remixTrackById(clip.trackID, clip.trackURL, function(t, percent) {
+    track = t;
+
+    console.log('here');
+
+    $("#info").text(percent + "% of the track loaded");
+
+    if (percent == 100) {
+      $("#info").text(percent + "% of the track loaded, remixing...");
+    }
+
+    if (track.status == 'ok') {
+      remixed = track.analysis.beats;
+      for (var i=0; i < remixed.length; i++) {
+        if (i % 4 == 1) {
+          remixed[i].syncBuffer = gruntBuffer;
+        }
+      }
+
+      window.t = track;
+
+      $("#info").text("Remix complete!");
+      enablePlayButton();
+
+      $status.html('');
+    }
+  });
+}
 
 function init() {
     if (window.webkitAudioContext === undefined) {
@@ -56,35 +144,6 @@ function init() {
         });
         }
         request.send();
-
-
-        remixer = createJRemixer(context, $, apiKey);
-        player = remixer.getPlayer();
-        $("#info").text("Loading analysis data...");
-
-        var clip = getSelectedClip();
-
-        remixer.remixTrackById(clip.trackID, clip.trackURL, function(t, percent) {
-            track = t;
-
-            $("#info").text(percent + "% of the track loaded");
-            if (percent == 100) {
-                $("#info").text(percent + "% of the track loaded, remixing...");
-            }
-
-            if (track.status == 'ok') {
-                remixed = track.analysis.beats;
-                for (var i=0; i < remixed.length; i++) {
-                    if (i % 4 == 1) {
-                        remixed[i].syncBuffer = gruntBuffer;
-                    }
-                }
-
-                window.t = track;
-
-                $("#info").text("Remix complete!");
-            }
-        });
     }
 }
 
