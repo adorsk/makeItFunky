@@ -13,6 +13,13 @@ var isPlaying;
 var track;
 var remixed;
 
+clipBuffers = {};
+
+var randFromArray = function(arr){
+  var randIndex = Math.floor(Math.random() * arr.length);
+  return arr[randIndex];
+}
+
 // Funkify the title.
 $('h1').lettering();
 
@@ -80,15 +87,43 @@ $stopButton.on('click', function(){
 // Set play button to disabled initially.
 disablePlayButton();
 
-$makeItFunkyButton.on('click', function(){
-  if (isPlaying){
-    stopPlaying();
-  }
-  disablePlayButton();
-  $status.html('Getting up offa that thing...');
-  remixIt();
-});
+disableMakeItFunkyButton = function(){
+  $makeItFunkyButton.addClass('disabled');
+  $makeItFunkyButton.off('click');
+}
 
+enableMakeItFunkyButton = function(){
+  $makeItFunkyButton.removeClass('disabled');
+  $makeItFunkyButton.on('click', function(){
+    if (isPlaying){
+      stopPlaying();
+    }
+    disablePlayButton();
+    disableMakeItFunkyButton();
+    $status.html('Getting up offa that thing...');
+    remixIt();
+  });
+}
+
+// Start w/ make it funky enabled.
+enableMakeItFunkyButton();
+
+var lastGruntId;
+var getGruntClipBuffer = function(){
+  var clip = randFromArray(gruntClips);
+  while (clip.id == lastGruntId){
+    clip = randFromArray(gruntClips);
+  }
+  lastGruntId = clip.id;
+  return clipBuffers[clip.id];
+}
+
+var wailCounter = 0;
+var getWailClipBuffer = function(){
+  var clipId = wailClips[wailCounter % wailClips.length].id;
+  wailCounter++;
+  return clipBuffers[clipId];
+}
 
 var remixIt = function(){
   remixer = createJRemixer(context, $, apiKey);
@@ -100,7 +135,7 @@ var remixIt = function(){
   remixer.remixTrackById(clip.trackID, clip.trackURL, function(t, percent) {
     track = t;
 
-    console.log('here');
+    enableMakeItFunkyButton();
 
     $("#info").text(percent + "% of the track loaded");
 
@@ -111,8 +146,23 @@ var remixIt = function(){
     if (track.status == 'ok') {
       remixed = track.analysis.beats;
       for (var i=0; i < remixed.length; i++) {
-        if (i % 4 == 1) {
-          remixed[i].syncBuffer = gruntBuffer;
+
+        var beatBuffer = undefined;
+
+        if (i == 0){
+           beatBuffer = clipBuffers[beFunkyClip.id];
+        }
+
+        else if (i == remixed.length - 1){
+          beatBuffer = getWailClipBuffer();
+        }
+
+        else if (i % 4 == 0) {
+          beatBuffer = getGruntClipBuffer();
+        }
+
+        if (beatBuffer){
+          remixed[i].syncBuffer = beatBuffer;
         }
       }
 
@@ -126,6 +176,19 @@ var remixIt = function(){
   });
 }
 
+var loadClip = function(clip){
+  var request = new XMLHttpRequest();
+  request.open('GET', clip.trackURL, true);
+  request.responseType = 'arraybuffer';
+
+  request.onload = function() {
+    context.decodeAudioData(request.response, function(buffer) {
+      clipBuffers[clip.id] = buffer;
+    });
+  }
+  request.send();
+};
+
 function init() {
     if (window.webkitAudioContext === undefined) {
         error("Sorry, this app needs advanced web audio. Your browser doesn't"
@@ -133,17 +196,16 @@ function init() {
     } else {
         context = new webkitAudioContext();
 
-        // Load grunt
-        var request = new XMLHttpRequest();
-        request.open('GET', gruntURL, true);
-        request.responseType = 'arraybuffer';
-
-        request.onload = function() {
-        context.decodeAudioData(request.response, function(buffer) {
-            gruntBuffer = buffer;
-        });
+        // Load up the Godfather!
+        for (var i = 0; i < gruntClips.length; i++){
+          loadClip(gruntClips[i]);
         }
-        request.send();
+
+        for (var i = 0; i < wailClips.length; i++){
+          loadClip(wailClips[i]);
+        }
+
+        loadClip(beFunkyClip);
     }
 }
 
