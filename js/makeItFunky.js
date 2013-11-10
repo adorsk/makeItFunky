@@ -28,7 +28,7 @@ $playButton.on('click', function(){
 // You will need to supply your Echo Nest API key, the trackID, and a URL to the track.
 // The supplied track and the cowbell file can be found in the audio subdirectory.
 var apiKey = 'QQCJEYULWUZXO5U6V';
-var gruntURL= '../jb_sounds/jb_unh.wav'
+var gruntURL= 'clips/jb_unh.wav'
 
 var context;
 var gruntBuffer;
