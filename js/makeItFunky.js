@@ -191,7 +191,7 @@ var loadClip = function(clip){
 
 function init() {
     if (window.webkitAudioContext === undefined) {
-        error("Sorry, this app needs advanced web audio. Your browser doesn't"
+        alert("Sorry, this app needs advanced web audio. Your browser doesn't"
             + " support it. Try the latest version of Chrome");
     } else {
         context = new webkitAudioContext();
