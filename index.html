@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="favicon.png">
 
-    <title>Make It Funky</title>
+    <title>Make It Funky | Add James Brown To Any Song</title>
 
     <!-- Bootstrap core CSS -->
     <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -31,6 +31,8 @@
         h1 { 
             text-transform: uppercase;
             font-family: 'Maven Pro', sans-serif;
+            margin-bottom: 0;
+            margin-top: 0;
         }
         h1 .char1 {color: #EBCD2D;}
         h1 .char2 {color: #3A50A6;}
@@ -45,6 +47,13 @@
         h1 .char11 {color: #76B4E3;}
         h1 .char12 {color: #D8412E;}
         h1 .char13 {color: #A43F67;}
+
+        .header h2 {
+            font-size: 125%;
+            font-style: italic;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
 
         .btn {
             font-size: 150%;
@@ -66,6 +75,7 @@
     <div id="mainContainer" class="container">
       <div class="header">
         <h1 class="text-muted">Make It Funky</h1>
+        <h2>Add James Brown To Any Song</h2>
         <div>A <a href="http://boston.musichackday.org/2013/" target="_blank">2013 Boston Music Hack Day</a> experiment with the <a target="_blank" href="http://echonest.github.io/remix/javascript.html">Echonest remix.js library</a>... and the Godfather of Soul.</div>
       </div>
 
@@ -105,13 +115,38 @@
 
             <div>
                 <h3>How it Works</h3>
-                This experiment uses EchoNest's beat detection capabilities to add funky decorations in time with the music.
+                <p>This experiment uses EchoNest's beat detection and remixing capabilities to add funky decorations in time with the music.</p>
+                <ol>
+                    <li>Clips are analyzed via EchoNest's python API.</li>
+                    <li>When a clip is selected for funkification, the remix.js library fetches the clip analysis from EchoNest. This clip analysis contains a wealth of information, including information about <strong>where the beats are in a song</strong>.</li>
+                    <li>The remix.js library uses that beat information to James Brown's grunts and wails at specific beats, via the WebAudio API.</li>
+                </ol>
+                <p>Source code is available on github: <a href="http://github.com/adorsk/makeItFunky">makeItFunky</a></p>
             </div>
 
             <div>
-                <h4>Made By...</h4>
+                <h3>Exercises for the Reader</h3>
+                <ul>
+                    <li>Add in the world's funkiest beats from <a href="http://en.wikipedia.org/wiki/John_%22Jabo%22_Starks">John "Jabo" Starks</a>. This could be done with the techniques used in <a href="static.echonest.com/bonhamizer/">The Bonhamizer</a>.</li>
+                    <li>Ditto above, but with JB's trademark guitar scratches.</li>
+                    <li>Add a breakdown to any song.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>Deep Questions</h3>
+                <ul>
+                    <li>Is funkification idempotent? What does it mean to add James Brown to himself? To quote <a href="http://www.imdb.com/title/tt0120601/">Being John Malkovich</a>, <em>What happens when man goes through his own portal?</em>
+                    <p>I believe the answer is...the Godfather gets <em>even</em> funkier. Funkification is not idempotent.
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>Made By...</h3>
                 <p>This was made by Alex, building largely off the <a target="_blank" href="http://echonest.github.io/remix/examples.html">remix.js examples</a>.</p>
                 <p>Alex had a great time making this hack. When he's not hacking, Alex is working on an online musical dojo called <a target="_blank" href="http://musikata.com">Musikata</a>. Check it out!</p>
+            </div>
 
         </div>
     </div>
@@ -127,6 +162,17 @@
     <script src="js/clips.js"></script>
     <script src="js/jbClips.js"></script>
     <script src="js/makeItFunky.js"></script>
+
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-45636920-1', 'adorsk.github.io');
+ga('send', 'pageview');
+
+    </script>
 
   </body>
 </html>
