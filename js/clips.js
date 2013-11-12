@@ -5,6 +5,11 @@ clips = [
   trackURL: 'clips/bob_dylan__hard_rain.mp3'
 },
 {
+  trackID: 'TRUYXMU1424D3CC391',
+  label: 'Jimmy Buffett: Volcano',
+  trackURL: 'clips/jimmy_buffett__volcano.mp3'
+},
+{
   trackID: 'TRETNMK14242EF0B76',
   label: 'Joan Baez: Kumbaya',
   trackURL: 'clips/joan_baez__kumbaya.mp3'
